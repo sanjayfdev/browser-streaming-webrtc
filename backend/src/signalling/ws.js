@@ -1,14 +1,14 @@
 import { WebSocketServer } from "ws";
 import dotenv from "dotenv";
+import { handleInput } from "../input/handleInput.js";
 dotenv.config();
 
 export function startWsServer({ router, sessionManager }) {
-
   const WS_PORT = process.env.WS_PORT || 8080;
   const announcedIp = process.env.ANNOUNCED_IP || "";
 
   const wss = new WebSocketServer({ port: WS_PORT });
-  
+
   console.log("📡 WebSocket signaling server running on ws://localhost:8080");
 
   wss.on("connection", (ws) => {
@@ -84,6 +84,11 @@ export function startWsServer({ router, sessionManager }) {
             },
           })
         );
+      }
+
+      // 5️⃣ Handle input events
+      if (data.action === "input") {
+        await handleInput(session, data);
       }
     });
 
