@@ -7,10 +7,12 @@ export class SessionManager {
     const session = {
       id: sessionId,
       browser: null,
+      page: null,
       ffmpeg: null,
       producer: null,
       plainTransport: null,
       transports: new Set(),
+      viewport: null,
     };
     this.sessions.set(sessionId, session);
     return session;
